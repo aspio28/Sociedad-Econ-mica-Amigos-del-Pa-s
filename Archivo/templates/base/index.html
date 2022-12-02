@@ -1,71 +1,120 @@
+{% load static %}
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Amigos Del Pais</title>
+    <link rel="stylesheet" href= "{% static 'style.css' %}">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="">
-        <style>
-        .busc {
-          background-color: tomato;
-          color: white;
-          border: 2px solid black;
-          margin: 20px;
-          padding: 20px;
-        }
-        </style>
-  
+   
 </head>
+
 <body>
+    <div class="full-page">
+        <div class="navbar">
+            <nav>
+                <ul id="MenuItems">
+                    <li><a href="/">Pagina Principal</a></li>
+                    <li><a href="#">Conoce Nuestra Historia</a></li>
+                    <li><a href="Search">Busca un documento</a></li>
+                    
+                    {% if user.is_authenticated %}
+                    <li><a href="#">Mi Cuenta</a></li>
+                    <li><a href="new">Nuevo Documento</a></li>
+                    <li><a href="/LogOut">Salir</a></li>
 
-    {% for message in messages %}
-    <div class='alert alert-{{message.tags}} alert-dismissable fade show' role="alert">
-    <strong>Message</strong> {{ message}}
-    <button type="button" class="close" data-dismissible="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-    </button></div>
-    {% endfor %}
+                    {% else %}
+                    <li><button class="loginbtn" onclick="document.getElementById('login-form').style.display = 'block'" style="width:auto;">Registrarse/Autenticarse</button></li>
+                    {% endif %}
 
-   <h2 style="text-align:center; color:Tomato; "> Registro Virtual Sociedad Economica Amigos del Pais</h2> 
+                </ul>
+            </nav> 
+        </div>
+        {% block content %}
+        <div id="login-form" class="login-page">
+            <div class="form-box">
+                <div class="button-box">
+                    <button type="button" onclick="login()" class="toggle-btn">Autenticarse</button>
+                    <button type="button" onclick="register()" class="toggle-btn"> Registrarse</button>
+                </div>
 
-   {% block content %}
-    <h4 > Realizar una búsqueda.</h4>
-    <form action="/Search" method="POST">
-        {% csrf_token %}
-            <label for="">Nombre Del Documento</label>
-            <input type="text" id="docname" name="docname" > 
-            <br>
-            <label for="">Autor Del Documento</label>
-            <input type="text" id="author" name="author"  >
-            <br>
-            <label for="">Tipo de Documento</label>
-            <input type="text" id="typeofdoc" name="typeofdoc" >
-            <br>
-            <label for="">Ano en que fue escrito</label>
-            <input type="number" id="year" name="year" min="1492" max="2022">
-            <br>
-            
-            <button type="submit">Realizar Busqueda</button>
-        
-        </form>
+                <form action="/SignIn" method="POST" id="login" class="input-group-login">
+                    {% csrf_token %}
+                     
+                        <input type="text" class="input-field" id="username" name="username" placeholder="Nombre de usuario" required> 
+                        <br>
+                        
+                        <input type="password"  class="input-field" id="pass" name="pass" placeholder="Escriba su contraseña" required>
+                        <br>
+                    
+                        <button type="submit" class="submit-btn">Autenticarse</button>
+                    
+                    </form>
 
-    {% if user.is_authenticated %}
-        <h3>Hola {{ user.first_name }}</h3>
+                    <form action="/SignUp" method="POST" id="register" class="input-group-register">
+                        {% csrf_token %}
+                        
+                            <input type="text" class="input-field" id="username" name="username" placeholder="Nombre de usuario(solo letras y numeros)" required> 
+                            <br>
+                          
+                            <input type="text" class="input-field" id="fname" name="fname" placeholder="Escriba su primer nombre" required>
+                            <br>
+                        
+                            <input type="text" class="input-field" id="lastname" name="lastname" placeholder="Escriba su primer apellido" required>
+                            <br>
+                          
+                            <input type="email" class="input-field" id="email" name="email" placeholder="Escriba su correo electrónico" required>
+                            <br>
+                          
+                            <input type="password" class="input-field" id="pass1" name="pass1" placeholder="Escriba su contraseña" required>
+                            <br>
+                           
+                            <input type="password" class="input-field" id="pass2" name="pass2" placeholder="Confirme la contraseña" required>
+                            <br>
+                         
+                            <button type="submit" class="submit-btn">Registrarse</button>
+                        
+                        </form>
 
-        {% if estado == 'valido' %}
-            <p> El documento ha sido guardado</p>
-        {% endif %}
-        <a href="new">+ Nuevo Documento</a>
-        <button type="submit"><a href="/LogOut"> Salir</a>  </button>
+            </div>
+        </div>
+    </div>
 
-    {% else %}
-        <button type="submit"><a href="/SignUp"> Registrarse</a>  </button>
-        <button type="submit"><a href="/SignIn"> Autenticarse</a>  </button>
-    {% endif %}
-
-    <script src="" async defer></script>
+    <script>
+        var x=document.getElementById('login');
+		var y=document.getElementById('register');
+		var z=document.getElementById('btn');
+        //  var p = document.getElementById('search-form');
+       // var o = document.getElementById('login-form');
+		function register()
+		{
+			x.style.left='-400px';
+			y.style.left='50px';
+			z.style.left='110px';
+           // p.hidden;
+		}
+		function login()
+		{
+			x.style.left='50px';
+			y.style.left='450px';
+			z.style.left='0px';
+           // p.hidden;
+		}
+	</script>
+	<script>
+        var modal = document.getElementById('login-form');
+        window.onclick = function(event) 
+        {
+            if (event.target == modal) 
+            {
+                modal.style.display = "none";
+            }
+        }
+    </script>
     {% endblock content %}
 </body>
 </html>

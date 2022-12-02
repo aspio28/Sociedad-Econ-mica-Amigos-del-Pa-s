@@ -13,9 +13,11 @@ def New_Document(request):
             info = formulario.cleaned_data
             title = request.POST.get("title")
             author = request.POST.get("author")
+            year = request.POST.get("year")
+            document_type = request.POST.get("document_type")
             body = request.POST.get("body")
 
-            doc = Document.objects.create(title= title , author= author, body= body)
+            doc = Document.objects.create(title= title , author= author,year= year, document_type = document_type, body= body)
 
             return render(request, "base/index.html",{"estado": "valido"})
 

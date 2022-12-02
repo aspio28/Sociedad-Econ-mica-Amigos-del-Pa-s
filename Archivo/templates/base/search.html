@@ -1,0 +1,13 @@
+{% extends 'base/index.html' %}
+
+{% block content %}
+<div class="form-box">
+    <form action="Search" method="POST" id="search"  class="input-group-search" >{% csrf_token %}
+        <div class='button-box'>
+            <h2 class="toggle-btn"> Ingrese su busqueda </h2>
+        </div>
+        {{ form.as_p }}
+        <button type="submit" class="submit-btn" >Realizar Busqueda</button>
+    </form>
+</div>
+{% endblock content %}
