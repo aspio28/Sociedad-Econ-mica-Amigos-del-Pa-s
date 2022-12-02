@@ -30,7 +30,7 @@
 
    <h2 style="text-align:center; color:Tomato; "> Registro Virtual Sociedad Economica Amigos del Pais</h2> 
 
-   
+   {% block content %}
     <h4 > Realizar una búsqueda.</h4>
     <form action="/Search" method="POST">
         {% csrf_token %}
@@ -50,20 +50,22 @@
             <button type="submit">Realizar Busqueda</button>
         
         </form>
-  
 
+    {% if user.is_authenticated %}
+        <h3>Hola {{ user.first_name }}</h3>
 
+        {% if estado == 'valido' %}
+            <p> El documento ha sido guardado</p>
+        {% endif %}
+        <a href="new">+ Nuevo Documento</a>
+        <button type="submit"><a href="/LogOut"> Salir</a>  </button>
 
+    {% else %}
+        <button type="submit"><a href="/SignUp"> Registrarse</a>  </button>
+        <button type="submit"><a href="/SignIn"> Autenticarse</a>  </button>
+    {% endif %}
 
-   {% if user.is_authenticated %}
-   <h3>Hola {{ user.first_name }}</h3>
-   <button type="submit"><a href="/LogOut"> Salir</a>  </button>
-
-   {% else %}
-   <button type="submit"><a href="/SignUp"> Registrarse</a>  </button>
-   <button type="submit"><a href="/SignIn"> Autenticarse</a>  </button>
-   {% endif %}
-
-   <script src="" async defer></script>
+    <script src="" async defer></script>
+    {% endblock content %}
 </body>
 </html>
