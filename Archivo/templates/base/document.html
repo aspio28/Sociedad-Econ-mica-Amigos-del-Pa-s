@@ -1,9 +1,13 @@
 {% extends 'base/index.html' %}
 
 {% block content %}
-    <h1 style= "text-align:center;">Nuevo Documento</h1>
-    <form action='new' method="POST" style="text-align: center;">{% csrf_token %}
+<div class="form-box">
+    <form action='new' method="POST" class="input-group-Search">{% csrf_token %}
+        <div class='button-box'>
+            <h2 style= "text-align:center;">Nuevo Documento</h2>
+        </div>
         {{ form.as_p }}
-        <input type="submit" value="Save">
+        <button type="submit"class="submit-btn">Save</button>
     </form>
+</div>
 {% endblock content %}

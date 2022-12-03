@@ -11,6 +11,9 @@ from Loggin.forms import FormSearch
 def home(request):
     return render(request, "base/index.html")
 
+def Sign(request):
+    return render(request,"base/sign.html")
+
 def SignIn(request):
 
     if request.method == "POST":
@@ -80,5 +83,5 @@ def SignUp(request):
 
 def Search(request):
     searching = FormSearch()
-    
+
     return render(request, "base/search.html", {"form": searching}) 
