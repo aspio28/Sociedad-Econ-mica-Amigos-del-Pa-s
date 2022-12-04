@@ -3,8 +3,6 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from Loggin.forms import FormSearch
-
 
 # Create your views here.
 
@@ -81,7 +79,3 @@ def SignUp(request):
 
     return render(request, "base/index.html")
 
-def Search(request):
-    searching = FormSearch()
-
-    return render(request, "base/search.html", {"form": searching}) 

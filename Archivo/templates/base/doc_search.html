@@ -1,0 +1,28 @@
+{% extends 'base/index.html' %}
+
+{% block content %}
+    <div class="form-box">
+        <div class='input-field'>
+            <p>Su busqueda es:</p>
+            <ul>
+                {% for var in query.items%}
+                    <li>{{var.0}}:{{var.1}}</li>
+                {% endfor%}
+            </ul> 
+        </div>
+        {% if documents %}
+            <ul class='input-field'>
+            {% for docu in documents%}
+                {%if docu%}
+                {% for doc in docu %}
+                    <li> Titulo:{{doc.title}} </li>
+                    <li> Cuerpo:{{doc.body}} </li>
+                {% endfor %}
+                {%else%}
+                    <p class='input-field'>No esta el documento buscado</P>
+                {%endif%}
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endblock content %}
