@@ -11,6 +11,17 @@ class Form_Document(forms.Form):
     document_type = forms.CharField(label="", widget=forms.TextInput(attrs={'class' : 'input-field','placeholder':'Tipo de documento'}),required=False)
     body = forms.CharField(label="", widget=forms.Textarea(attrs={'class' : 'input-field','rows':3, 'cols':5,'placeholder':'Documento'}),required=False)
     
+    def clean(self):
+        xml_file = self.cleaned_data.get('xml_file')
+        title = self.cleaned_data.get('title')
+        author = self.cleaned_data.get('author')
+        year = self.cleaned_data.get('year')
+        document_type = self.cleaned_data.get('document_type')
+        body = self.cleaned_data.get('body')
+
+        if not xml_file and not title and not author and not year and not document_type and not body:
+            raise ValidationError("Debes ingresar algun documento")
+        return self.cleaned_data 
 
 class FormSearch(forms.Form):
     title = forms.CharField(label='', widget=forms.TextInput(attrs={'class' : 'input-field','placeholder':'Titulo', 'name':'tit'}), required=False)

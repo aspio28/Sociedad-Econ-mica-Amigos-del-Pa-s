@@ -30,9 +30,10 @@ def New_Document(request):
                     child.text = atribute
 
                 xml_string = ET.tostring(root,encoding="unicode")
-
-            doc = Document.objects.create(xml_data = xml_string)
+            Document.objects.create(xml_data = xml_string)
             return render(request, "base/index.html",{"estado": "valido"})
+        else:
+            return render(request, "base/search.html", {"form": formulario}) 
     return render(request, "base/document.html",{"form":formulario})
 
 def Search(request):
@@ -64,7 +65,7 @@ def Search(request):
                 query['Tipo de documento'] = document_type
             return render(request,'base/doc_search.html',{"documents":info_xml(documents),"query":query})
         else:
-            return render(request, "base/search.html", {"form": searching,"form_errors":searching.errors.as_text}) 
+            return render(request, "base/search.html", {"form": searching}) 
     else:
         searching = FormSearch()
         return render(request, "base/search.html", {"form": searching}) 
