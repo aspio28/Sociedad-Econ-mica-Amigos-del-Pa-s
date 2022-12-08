@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="form-box">
-    <form action='new' method="POST" class="input-group-Search">{% csrf_token %}
+    <form action='new' method="POST" enctype='multipart/form-data' class="input-group-Search">{% csrf_token %}
         <div class='button-box'>
             <h2 style= "text-align:center;">Nuevo Documento</h2>
         </div>

@@ -1,19 +1,11 @@
 from django.db import models
 from django.urls import reverse
+from xml.etree import ElementTree as ET
 
-# class Document(models.Model):
-#     title = models.CharField(max_length=200)
-#     author = models.CharField(max_length=200)
-#     year=models.IntegerField(default=0)
-#     document_type=models.CharField(max_length=100, default="")
-#     body = models.TextField()
-
-#     def __str__(self):
-#         return self.title
-
-#     def get_absolute_url(self):
-#         return reverse("document.html", args=[str(self.id)])
-    
 class Document(models.Model):
     xml_data = models.TextField()
     
+    def __str__(self):
+        root = ET.fromstring(self.xml_data)
+        root_name = root[0].text
+        return root_name
