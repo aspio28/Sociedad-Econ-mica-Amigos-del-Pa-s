@@ -12,12 +12,9 @@
         </div>
         {% if documents %}
             <ul class='input-field'>
-            {% for docu in documents%}
-                {%if docu%}
-                {% for doc in docu %}
-                    <li> Titulo:{{doc.title}} </li>
-                    <li> Cuerpo:{{doc.body}} </li>
-                {% endfor %}
+            {% for doc in documents.items%}
+                {%if doc%}
+                    <li> {{doc.0}}:{{doc.1}} </li>
                 {%else%}
                     <p class='input-field'>No esta el documento buscado</P>
                 {%endif%}

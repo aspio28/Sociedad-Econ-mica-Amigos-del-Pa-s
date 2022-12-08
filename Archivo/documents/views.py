@@ -63,7 +63,18 @@ def Search(request):
             if(document_type != ''):
                 documents.append(Document.objects.filter(xml_data=document_type))
                 query['Tipo de documento'] = document_type
-            return render(request,'base/doc_search.html',{"documents":documents,"query":query})
+            return render(request,'base/doc_search.html',{"documents":info_xml(documents),"query":query})
     else:
         searching = FormSearch()
         return render(request, "base/search.html", {"form": searching}) 
+def info_xml(dic_xml):
+    
+    dic = {}
+    for doc in dic_xml:
+        for docu in doc:        
+            root = ET.fromstring(docu.xml_data)
+            for elem in root:
+                root_element = elem.tag.replace('_',' ').title().replace('nh', 'ñ')
+                root_text = elem.text
+                dic[root_element] = root_text
+    return dic
