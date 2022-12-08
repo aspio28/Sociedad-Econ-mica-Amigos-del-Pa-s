@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from .models import Document
 from documents.forms import Form_Document,FormSearch
-from django.http import HttpResponse
 from xml.etree import ElementTree as ET
 
 def New_Document(request):
@@ -50,19 +49,19 @@ def Search(request):
             document_type = info['document_type']
             
             if(title != ''):
-                documents.append(Document.objects.filter(title__icontains=title))
+                documents.append(Document.objects.filter(xml_data__icontains=title))
                 query['Título'] = title
             
             if(author != ''):
-                documents.append(Document.objects.filter(author__icontains=author))
+                documents.append(Document.objects.filter(xml_data__icontains=author))
                 query['Autor'] = author
             
             if(year != None):
-                documents.append(Document.objects.filter(year__icontains=year))
+                documents.append(Document.objects.filter(xml_data__icontains=year))
                 query['Año en que fue escrito'] = year
             
             if(document_type != ''):
-                documents.append(Document.objects.filter(document_type=document_type))
+                documents.append(Document.objects.filter(xml_data=document_type))
                 query['Tipo de documento'] = document_type
             return render(request,'base/doc_search.html',{"documents":documents,"query":query})
     else:
