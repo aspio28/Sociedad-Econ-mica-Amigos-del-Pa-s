@@ -15,11 +15,11 @@
             {% for doc in documents.items%}
                 {%if doc%}
                     <li> {{doc.0}}:{{doc.1}} </li>
-                {%else%}
-                    <p class='input-field'>No esta el documento buscado</P>
                 {%endif%}
             {% endfor %}
             </ul>
+        {%else%}
+            <p class='input-field'>No esta el documento buscado</P>   
         {% endif %}
     </div>
 {% endblock content %}

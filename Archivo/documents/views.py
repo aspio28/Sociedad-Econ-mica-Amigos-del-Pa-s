@@ -33,7 +33,6 @@ def New_Document(request):
 
             doc = Document.objects.create(xml_data = xml_string)
             return render(request, "base/index.html",{"estado": "valido"})
-
     return render(request, "base/document.html",{"form":formulario})
 
 def Search(request):
@@ -64,6 +63,8 @@ def Search(request):
                 documents.append(Document.objects.filter(xml_data=document_type))
                 query['Tipo de documento'] = document_type
             return render(request,'base/doc_search.html',{"documents":info_xml(documents),"query":query})
+        else:
+            return render(request, "base/search.html", {"form": searching,"form_errors":searching.errors.as_text}) 
     else:
         searching = FormSearch()
         return render(request, "base/search.html", {"form": searching}) 
